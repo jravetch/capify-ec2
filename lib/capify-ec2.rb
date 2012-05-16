@@ -53,11 +53,11 @@ class CapifyEc2
   end
   
   def desired_instances(region = nil)
-    instances = @ec2_config[:project_tag].nil? ? @instances : project_instances
+    @ec2_config[:project_tag].nil? ? @instances : project_instances
   end
  
   def get_instances_by_role(role)
-    desired_instances.select {|instance| instance.tags['Roles'].split(%r{[, ]+}).include?(role.to_s) rescue false}
+    desired_instances.select {|instance| instance.tags['Roles'].split(%r{,\s*}).include?(role.to_s) rescue false}
   end
   
   def get_instances_by_region(roles, region)
